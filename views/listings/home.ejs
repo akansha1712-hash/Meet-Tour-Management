@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ECOR Portal - Indian Railways</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* LEFT PANEL */
+.left-panel {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  min-width: 300px;
+  overflow: hidden;
+}
+
+.left-panel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* RIGHT PANEL */
+.right-panel {
+  flex: 0 0 40%; /* Reduced width */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #003366; /* ECOR Blue */
+  padding: 30px 20px;
+  color: white;
+  min-width: 300px;
+  position: relative;
+}
+
+/* HEADER */
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 30px;
+  gap:45px;
+  padding: 10px 20px;
+}
+
+.logo-left-container img {
+  height: 60px;
+  width: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+  background-color: transparent; /* Removes any background */
+}
+
+.ecor-branding-middle {
+  text-align: center;
+  margin-left: 10px;
+}
+
+.logo-text {
+  font-size: 28px;
+  font-weight: bold;
+  color: #daa520; /* Yellow */
+}
+
+.sub-text {
+  display: block;
+  font-size: 13px;
+  color: #dcdcdc;
+}
+
+/* LOGIN FORM */
+.login-section {
+  text-align: center;
+  width: 100%;
+}
+
+.login-section h1 {
+  font-size: 32px; /* Slightly increased */
+  margin-bottom: 12px;
+  color: #ffffff; /* Ensure it stands out on blue background */
+}
+
+.login-section p {
+  margin-bottom: 20px;
+  color: #e0e0e0;
+  font-size: 14px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* INPUT */
+.input-group input {
+  width: 220px;
+  padding: 8px 14px;
+  font-size: 14px;
+  border: 1px solid #007bff;
+  /* border-left: 4px solid #003366; */
+  /* border-radius:1.2px; */
+  background-color: #e6f2ff;
+  text-align: center;
+    opacity: 0.85;
+  border-radius:8px;
+  background-color: #ffffff;
+}
+
+/* BUTTON */
+.login-button {
+ background-color: #daa520;/* Yellow */
+  color: #ffffff;
+  border: none;
+  padding: 8px 22px;
+  font-size: 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #e6c200;
+}
+
+/* OPTIONS */
+.login-options {
+  margin-top: 15px;
+}
+
+.option-link {
+color: #daa520;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.separator {
+  margin: 0 10px;
+  color: #aaa;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .left-panel,
+  .right-panel {
+    width: 100%;
+    min-height: 50vh;
+  }
+
+  .logo-left-container img {
+    margin-bottom: 10px;
+  }
+
+  .input-group input,
+  .login-button {
+    width: 80%;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="left-panel">
+      <img src="Ecor_Building.jpg" alt="ECOR Headquarters Building" class="ecor-building-image">
+    </div>
+
+    <div class="right-panel">
+      <div class="header-top">
+        <div class="logo-left-container">
+          <img src="RailwayLogo2.jpg" alt="Indian Railways Logo" class="ir-logo">
+        </div>
+        <div class="ecor-branding-middle">
+          <span class="logo-text">ECOR</span>
+          <span class="sub-text">Indian Railways</span>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="login-section">
+        <h1>Welcome to ECOR</h1>
+        <p class="login-prompt">Please log in to access your portal.</p>
+        <form class="form" id="loginForm" action="/login" method="POST">
+  <div class="input-group">
+    <input type="text" name="username" placeholder="Enter Username" required />
+  </div>
+  <div class="input-group">
+    <input type="password" name="password" placeholder="Password" required />
+  </div>
+  <button type="submit" class="login-button">LOGIN</button>
+</form>
+        <!-- <div class="login-options">
+          <a href="/register" class="option-link">New User Registration</a>
+          <span class="separator">|</span>
+          <a href="#" class="option-link">Forgot Password?</a>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const button = form.querySelector('button');
+      const originalText = button.textContent;
+
+      button.disabled = true;
+      button.textContent = 'Logging in...';
+
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      form.submit(); // real submit
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+
+ 
+  <title>Railway Board Header</title>
+  <link rel="stylesheet" href="/style.css">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+ .railway-header {
+  background: linear-gradient(to right, #1e3c72, #2a5298); /* Royal Navy to Sky Blue */
+  color: white;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding: 0 25px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+
+
+.right-section:hover .user-icon {
+  background-color: #fff;
+  color: #2575fc;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+
+.left-section {
+  position: absolute;
+  left: 25px;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+    .center-section {
+      margin: 0 auto;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .hindi {
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+}
+.english {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.right-section {
+  position: absolute;
+  right: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.welcome-message {
+  font-size: 13px;
+  margin-top: 3px;
+  color: white;
+}
+
+
+    .user-icon {
+  font-size: 22px;
+  background-color: white;
+  color: #1e3c72;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  text-align: center;
+  line-height: 34px;
+  font-weight: bold;
+}
+#dateTime {
+  font-size: 16px;
+  font-weight: 500;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  margin-top: 3px;
+}
+.railway-logo {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  object-fit: contain;
+  background-color: transparent;
+  padding: 2px;
+  display: block;
+}
+
+
+ body.dark-theme {
+  background-color: #121212;
+  color: white;
+}
+
+.theme-toggle-btn {
+  position: absolute;
+  right: 25px;
+  top: 75px;
+  padding: 6px 12px;
+  background-color: #444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.theme-toggle-btn:hover {
+  background-color: #333;
+}
+
+
+
+  </style>
+</head>
+<body>
+
+  <header class="railway-header">
+    <img src="/RailwayLogo2.jpg" alt="logo" class="railway-logo">
+
+    <div class="center-section">
+      <div class="hindi">पूर्व तट रेलवे</div>
+      <div class="english">East Coast Railway</div>
+    </div>
+
+   <div class="tag">
+    
+    <span id="dateTime"></span>
+  </div>
+
+  </header>
+<script>
+ function updateDateTime() {
+  const dateTimeElem = document.getElementById('dateTime');
+  const now = new Date();
+
+  // Get weekday name
+  const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const weekdayName = weekdays[now.getDay()];
+
+  // Get date parts
+  const day = String(now.getDate()).padStart(2, '0');
+  const months = ["January", "February", "March", "April", "May", "June", "July",
+                  "August", "September", "October", "November", "December"];
+  const monthName = months[now.getMonth()];
+  const year = now.getFullYear();
+
+  // Format time in 12-hour format with AM/PM
+  let hours = now.getHours();
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+
+  hours = hours % 12;
+  hours = hours ? hours : 12; // convert 0 to 12
+  const hourStr = String(hours).padStart(2, '0');
+
+  const timeString = `${hourStr}:${minutes}:${seconds} ${ampm}`;
+
+  // Final formatted date-time string
+  const dateTimeString = `${weekdayName}, ${day} ${monthName} ${year}, ${timeString}`;
+
+  dateTimeElem.textContent = dateTimeString;
+}
+
+// Initial call
+updateDateTime();
+
+// Update every second
+setInterval(updateDateTime, 1000);
+</script>
+</body>
+

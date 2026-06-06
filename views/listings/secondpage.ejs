@@ -1,0 +1,354 @@
+<style>
+    css:-
+/* General Body and Container Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;    /* Center vertically */
+    min-height: 100vh;
+    background-color: #000; /* Set to completely black */
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    width: 100%; /* Increased width to 100% to fill available space */
+    max-width: 1500px; /* Increased max-width for a much larger section */
+    height: 750px; /* Slightly increased height */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Left Panel Styling (Image side) */
+.left-panel {
+    flex: 2;
+    background-color: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.ecor-building-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Right Panel Styling (Login form side) */
+.right-panel {
+    flex: 1;
+    background-color: #0C243D; /* Deep blue as requested */
+    color: #ecf0f1; /* Kept light color for text for contrast */
+    /* Adjusted padding: Reduced top, reduced left to bring logo closer to margin */
+    padding: 30px 50px 80px 30px; /* top 30px, right 50px, bottom 80px, left 30px */
+    display: flex;
+    flex-direction: column;
+    /* Kept justify-content to center to position overall content in the middle */
+    justify-content: center; /* Centers the entire column vertically */
+    box-sizing: border-box;
+}
+
+/* Header Top Styling (for logo and branding) */
+.header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 15px; /* **FURTHER REDUCED**: Adjusted margin-bottom to reduce space to "Welcome to ECOR" */
+}
+
+/* Logo container for positioning on the left */
+.logo-left-container {
+    display: flex;
+    align-items: center;
+}
+
+.ir-logo {
+    height: 100px; /* Increased logo size */
+    width: 100px; /* Make width equal to height for a perfect circle */
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* ECOR Indian Railways text group - to be centered */
+.ecor-branding-middle {
+    text-align: center;
+    flex-grow: 1;
+    margin-left: auto;
+    margin-right: auto;
+    white-space: nowrap; /* Keep "ECOR Indian Railways" on one line */
+}
+
+.logo-text {
+    font-size: 3em; /* Increased font size for ECOR */
+    font-weight: 700;
+    color: #f39c12; /* Kept contrasting orange/gold */
+    display: block;
+}
+
+.sub-text {
+    font-size: 1em; /* Sub-text font size */
+    color: #bdc3c7;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Login Section Styling */
+.login-section {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Vertically centers the login block within its available space */
+    flex-grow: 2; /* Allows it to take up more space to be truly in the middle */
+    align-self: center; /* Centers the login section horizontally within the right panel */
+    margin-top: 0; /* Set to 0 to prevent extra space at top */
+    margin-bottom: 20px; /* Keep this to position button above options */
+}
+
+.login-section h1 {
+    font-size: 3.5em; /* Increased font size for "Welcome to ECOR" */
+    margin-bottom: 15px;
+    color: #ffffff; /* Kept white for strong visibility */
+    text-align: center; /* Ensure the heading text itself is centered */
+    margin-top: 0; /* Set to 0 as spacing is now handled by header-top margin-bottom */
+}
+
+.login-prompt {
+    font-size: 1.1em;
+    color: #bdc3c7; /* Kept light grey for readability */
+    margin-bottom: 30px;
+    text-align: center; /* Ensure prompt text is centered */
+}
+
+.login-button {
+    background-color: #f39c12; /* Kept contrasting orange/gold */
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 25px;
+    font-size: 1.2em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.5px;
+    /* Added margin-top to separate from input fields, if they were placed directly above */
+    margin-top: 30px; /* Increased margin to separate button from new input fields */
+}
+
+.login-button:hover {
+    background-color: #e67e22; /* Kept darker orange for hover */
+    transform: translateY(-2px);
+}
+
+/* Login Options Styling */
+.login-options {
+    margin-top: 15px; /* Keep a small fixed margin to move it right below the button */
+    font-size: 0.9em;
+    color: #bdc3c7;
+    text-align: center;
+    width: 100%;
+}
+
+.option-link {
+    color: #f39c12; /* Kept contrasting orange/gold */
+    text-decoration: none;
+    margin: 0 5px;
+    transition: color 0.3s ease;
+}
+
+.option-link:hover {
+    color: #ffaa4c; /* Kept lighter orange for hover */
+    text-decoration: underline;
+}
+
+.separator {
+    color: #6a7b8e;
+}
+
+/* --- NEW STYLES FOR LOGIN INPUTS --- */
+.input-group {
+    width: 100%; /* Take full width of its container */
+    max-width: 350px; /* Limit max width for better aesthetics on larger screens */
+    margin-bottom: 20px; /* Space between input fields */
+}
+
+.input-group input {
+    width: calc(100% - 40px); /* Full width minus padding for box-sizing */
+    padding: 15px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle light border */
+    border-radius: 8px; /* Slightly rounded corners for the input fields */
+    background-color: rgba(255, 255, 255, 0.1); /* Very slight translucent white */
+    color: #ecf0f1; /* Light text color for input */
+    font-size: 1.1em;
+    outline: none; /* Remove default outline on focus */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.input-group input::placeholder {
+    color: #bdc3c7; /* Light grey placeholder text */
+    opacity: 0.7; /* Make placeholder a bit faded */
+}
+
+.input-group input:focus {
+    border-color: #f39c12; /* Orange border on focus */
+    background-color: rgba(255, 255, 255, 0.15); /* Slightly less transparent on focus */
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        width: 95%;
+        height: auto;
+        max-width: 500px;
+    }
+
+    .left-panel, .right-panel {
+        flex: none;
+        width: 100%;
+    }
+
+    .left-panel {
+        height: 200px;
+    }
+
+    .right-panel {
+        padding: 40px 20px; /* Adjust padding for smaller screens */
+    }
+
+    .header-top {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .ecor-branding-middle {
+        margin: 0;
+        text-align: center;
+        width: auto;
+    }
+
+    .logo-left-container {
+        margin: 0;
+        padding: 0;
+    }
+
+    .ir-logo {
+        height: 50px;
+        width: 50px;
+    }
+
+    .login-section h1 {
+        font-size: 2em;
+    }
+
+    .login-prompt {
+        font-size: 1em;
+    }
+
+    .login-button {
+        width: 80%;
+        padding: 12px 20px;
+    }
+
+    .login-options {
+        margin-top: 15px; /* Keep consistent with desktop for responsiveness */
+    }
+
+    /* Adjust input fields for smaller screens */
+    .input-group {
+        max-width: 100%; /* Allow inputs to take full width on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .login-section h1 {
+        font-size: 1.8em;
+    }
+
+    .login-prompt {
+        font-size: 0.9em;
+    }
+
+    .logo-text {
+        font-size: 1.8em;
+    }
+
+    .sub-text {
+        font-size: 0.8em;
+    }
+
+    .login-button {
+        font-size: 1.1em;
+        padding: 10px 25px;
+    }
+}
+</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECOR Portal - Indian Railways</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <img src="Ecor_Building.png" alt="ECOR Headquarters Building" class="ecor-building-image">
+        </div>
+        <div class="right-panel">
+            <div class="header-top">
+                <div class="logo-left-container">
+                    <img src="Railway_Logo.png" alt="Indian Railways Logo" class="ir-logo">
+                </div>
+
+                <div class="ecor-branding-middle">
+                    <span class="logo-text">ECOR</span>
+                    <span class="sub-text">Indian Railways</span>
+                </div>
+
+                <div></div>
+            </div>
+
+            <div class="login-section">
+                <h1>Welcome to ECOR</h1>
+                <p class="login-prompt">Please log in to access your portal.</p>
+
+                <div class="input-group">
+                    <input type="email" id="email" placeholder="Email Address">
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="Password">
+                </div>
+                <button class="login-button">LOGIN</button>
+                <div class="login-options">
+                    <a href="#" class="option-link">New User Registration</a>
+                    <span class="separator">|</span>
+                    <a href="#" class="option-link">Forgot Password?</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Officer Movement</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+       background: linear-gradient(to right, #c9d6ff, #e2e2e2); /* Page background */
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 800px;
+      margin: auto;
+      margin-top: 4rem;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-title {
+      background-color: #007bff;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 20px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      margin: -30px -30px 25px -30px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+
+    .form-group {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #003366;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 2px solid #007bff;
+      border-left: 6px solid red;
+      border-radius: 5px;
+      font-size: 15px;
+      background-color: #f5faff;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      resize: vertical;
+      height: 60px;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 25px;
+    }
+
+    button {
+      padding: 10px 25px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .submit-btn {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .submit-btn:hover {
+      background-color: #2600ff;
+    }
+
+    .clear-btn {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .clear-btn:hover {
+      background-color: #2600ff;
+    }
+
+    @media (max-width: 600px) {
+      .form-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <div class="form-title">Edit Tour Programme / Leave</div>
+    <form method="POST" action="/tour/edit/<%= entry._id %>">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="officerName">Officer Name</label>
+          <input type="text" id="officerName" name="officerName" value="<%= entry.officerName %>" required />
+        </div>
+
+        <div class="form-group">
+          <label for="designation">Designation</label>
+          <input type="text" id="designation" name="description" value="<%= entry.description %>" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="leavingHQOn">Leaving Headquarter On</label>
+          <input type="date" id="leavingHQOn" name="leavingHQOn" value="<%= entry.leavingHQOn.toISOString().slice(0,10) %>" required />
+        </div>
+
+        <div class="form-group">
+          <label for="comingBackOn">Coming Back On</label>
+          <input type="date" id="comingBackOn" name="comingBackOn" value="<%= entry.comingBackOn.toISOString().slice(0,10) %>" required />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group" style="flex: 1 1 100%;">
+          <label for="purpose">Purpose</label>
+          <textarea id="purpose" name="purpose" required><%= entry.purpose %></textarea>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="goingTo">Going To</label>
+          <input type="text" id="goingTo" name="goingTo" value="<%= entry.goingTo %>" required />
+        </div>
+
+        <div class="form-group">
+          <label for="status">Leave or Duty</label>
+          <select id="status" name="status" required>
+            <option value="">Select</option>
+            <option value="Leave" <%= entry.status === 'Leave' ? 'selected' : '' %>>Leave</option>
+            <option value="Duty" <%= entry.status === 'Duty' ? 'selected' : '' %>>Duty</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="submit-btn">Update</button>
+        <button type="reset" class="clear-btn">Clear</button>
+      </div>
+
+    </form>
+  </div>
+
+</body>
+</html>

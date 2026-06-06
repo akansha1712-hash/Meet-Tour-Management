@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tour Search</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background: #f0f0f0;
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input[type="date"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 25px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <form id="searchForm">
+      <div class="form-group">
+        <label for="fromDate">From Date</label>
+        <input type="date" id="fromDate" name="fromDate" required />
+      </div>
+
+      <div class="form-group">
+        <label for="toDate">To Date</label>
+        <input type="date" id="toDate" name="toDate" required />
+      </div>
+
+      <button type="submit">Search</button>
+    </form>
+
+    <table id="resultTable" class="hidden">
+      <thead>
+        <tr>
+          <th>Officer Name</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Out To</th>
+          <th>Status</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody id="resultBody">
+        <!-- Results will be inserted here -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    document.getElementById("searchForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const from = document.getElementById("fromDate").value;
+      const to = document.getElementById("toDate").value;
+
+      const response = await fetch('/search-tours', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ fromDate: from, toDate: to })
+      });
+
+      const data = await response.json();
+
+      const table = document.getElementById("resultTable");
+      const tbody = document.getElementById("resultBody");
+      tbody.innerHTML = "";
+
+      if (data.length > 0) {
+        data.forEach(entry => {
+          const row = `<tr>
+            <td>${entry.officerName}</td>
+            <td>${entry.leavingHQOn.slice(0,10)}</td>
+            <td>${entry.comingBackOn.slice(0,10)}</td>
+            <td>${entry.goingTo}</td>
+            <td>${entry.status}</td>
+            <td>${entry.purpose}</td>
+          </tr>`;
+          tbody.innerHTML += row;
+        });
+        table.classList.remove("hidden");
+      } else {
+        tbody.innerHTML = `<tr><td colspan="6">No results found</td></tr>`;
+        table.classList.remove("hidden");
+      }
+    });
+  </script>
+
+</body>
+</html>

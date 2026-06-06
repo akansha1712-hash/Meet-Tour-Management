@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tour Programme / Leave</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e8f4fd;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 40px auto 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      border: 2px solid #003366;
+    }
+
+    .top-header {
+     background-color: #2196f3;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      border-radius: 6px 6px 0 0;
+    }
+
+    .top-header h1 {
+      font-size: 24px;
+      margin: 0;
+      flex: 1 1 auto;
+      text-align: center;
+    }
+
+    .top-header .btn-group {
+      display: flex;
+      gap: 10px;
+      flex: 1 1 auto;
+      justify-content: flex-end;
+    }
+
+    .top-header form button,
+    .top-header a {
+      padding: 8px 15px;
+      border-radius: 4px;
+      font-size: 14px;
+      border: none;
+      color: white;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .logout-btn {
+      background-color: #dc3545;
+    }
+
+    .add-btn {
+      background-color: #28a745;
+    }
+
+    .login-btn {
+      background-color: #007bff;
+    }
+
+   .filter-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 30px 0;
+  padding: 20px;
+  border: none; /* Explicitly no border */
+}
+
+
+    .filter-form label {
+      font-weight: bold;
+    }
+
+    .filter-form input[type="date"] {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    .filter-form button {
+      padding: 10px 18px;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .filter-form button[type="submit"] {
+      background-color: #007bff;
+    }
+
+    .filter-form button[type="reset"] {
+      background-color: #6c757d;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      padding: 14px 16px;
+      text-align: center;
+      border: none;
+    }
+
+    th {
+     background-color: #2196f3;
+      color: white;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    tr:nth-child(odd) {
+      background-color: #eef5ff;
+    }
+
+    tr:nth-child(even) {
+      background-color: #e3f6f5;
+    }
+
+    tr:hover {
+      background-color: #e0f7fa;
+      transform: translateY(-4px) scale(1.01);
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .edit-icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      color: #007bff;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .edit-icon-btn:hover {
+      color: #004a99;
+      transform: scale(1.3);
+    }
+
+    @media (max-width: 768px) {
+      .top-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .top-header h1 {
+        margin-bottom: 10px;
+      }
+
+      .top-header .btn-group {
+        justify-content: center;
+      }
+
+      .filter-form {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .filter-form button,
+      .filter-form input[type="date"] {
+        width: 100%;
+      }
+    }
+.clear-btn {
+background-color: #6c757d; /* grey tone */
+color: white;
+padding: 10px 20px;
+font-size: 16px;
+border: none;
+border-radius: 6px;
+box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.clear-btn:hover {
+background-color: #5a6268;
+transform: scale(1.05);
+box-shadow: 3px 6px 10px rgba(0, 0, 0, 0.25);
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Top Header -->
+    <div class="top-header">
+      <h1>Tour Programme / Leave</h1>
+      <div class="btn-group">
+        <% if (currentUser) { %>
+          <a href="/tour" class="add-btn">+ Add Tour/Leave</a>
+          <form action="/logout" method="POST">
+            <button class="logout-btn" type="submit">Logout</button>
+          </form>
+        <% } else { %>
+          <a href="/home" class="login-btn">Login</a>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- Filter Form -->
+<form class="filter-form" action="/submits" method="POST">
+  <label for="fromDate">From:</label>
+  <input type="date" id="fromDate" name="fromDate" value="<%= fromDate || '' %>" required>
+
+  <label for="toDate">To:</label>
+  <input type="date" id="toDate" name="toDate" value="<%= toDate || '' %>" required>
+
+  <button type="submit">Show</button>
+<!--   <button type="button" onclick="window.location.href='/tourSearch'">Clear</button> -->
+<button type="button" id="clearButton" class="clear-btn">Clear</button>
+
+</form>
+
+
+    <!-- Table Section -->
+    <% if (data && data.length > 0) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>Officer Name</th>
+            <th>From Date</th>
+            <th>To Date</th>
+            <th>Going To</th>
+            <th>Status</th>
+            <th>Purpose</th>
+            <% if (currentUser) { %><th>Action</th><% } %>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.forEach(entry => { %>
+            <tr>
+              <td><%= entry.officerName %></td>
+              <td><%= entry.leavingHQOn.toISOString().slice(0, 10) %></td>
+              <td><%= entry.comingBackOn.toISOString().slice(0, 10) %></td>
+              <td><%= entry.goingTo %></td>
+              <td><%= entry.status %></td>
+              <td><%= entry.purpose %></td>
+              <% if (currentUser) { %>
+                <td>
+                  <a href="/tour/edit/<%= entry._id %>" class="edit-icon-btn" title="Edit">
+  <i class="fas fa-pen-to-square"></i>
+</a>
+
+                </td>
+              <% } %>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } else if (data) { %>
+      <p style="text-align: center;">No officer movement found for the selected date range.</p>
+    <% } %>
+  </div>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const clearBtn = document.getElementById("clearButton");
+    const fromDate = document.getElementById("fromDate");
+    const toDate = document.getElementById("toDate");
+    const table = document.querySelector("table");
+    let message = document.querySelector("#no-data-message");
+
+    clearBtn.addEventListener("click", function () {
+      // Clear date inputs
+      fromDate.value = '';
+      toDate.value = '';
+
+      // Hide the table
+      if (table) {
+        table.remove();
+      }
+
+      // Show "No data" message if not already there
+      if (!message) {
+        message = document.createElement("p");
+        message.id = "no-data-message";
+        message.style.textAlign = "center";
+        message.textContent = "No officer movement found for the selected date range.";
+        document.querySelector(".container").appendChild(message);
+      }
+    });
+  });
+</script>
+
+
+</body>
+</html>

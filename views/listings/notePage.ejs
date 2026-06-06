@@ -1,0 +1,125 @@
+
+
+<style>
+  .note-container {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 40px;
+    background-color: #f9fbfd;
+    border: 2px solid #1976d2;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .note-container h2 {
+    color: #0a3d62;
+    margin-bottom: 25px;
+    font-size: 28px;
+    text-shadow: 1px 1px 0 #ccc;
+  }
+
+  .meeting-details p {
+    font-size: 17px;
+    margin: 8px 0;
+  }
+
+  .meeting-details strong {
+    color: #003366;
+    font-weight: 600;
+  }
+
+  .note-card {
+    background: #fef9e7;
+    border-left: 6px solid #ff9800;
+    padding: 22px;
+    margin-top: 25px;
+    border-radius: 10px;
+    font-size: 16px;
+    color: #5e4c00;
+    box-shadow: 0 5px 15px rgba(255, 152, 0, 0.25);
+    white-space: pre-wrap;
+  }
+
+  textarea {
+    width: 100%;
+    height: 140px;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    resize: vertical;
+    font-size: 15px;
+    font-family: inherit;
+    margin-top: 20px;
+  }
+
+  .submit-btn {
+    margin-top: 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .submit-btn:hover {
+    background-color: #218838;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 30px;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 15px;
+    transition: background-color 0.3s ease;
+  }
+
+  .back-link:hover {
+    background-color: #0056b3;
+  }
+
+  @media (max-width: 768px) {
+    .note-container {
+      padding: 20px;
+    }
+
+    textarea {
+      height: 120px;
+    }
+  }
+</style>
+
+<div class="note-container">
+  <div class="meeting-details" style="text-align: center;">
+    <h2>📝 Note for Meeting</h2>
+
+    <p><strong>Date:</strong> <span style="color: #00695c;"><%= meeting.meetingDate.toISOString().split('T')[0] %></span></p>
+    <p><strong>Time:</strong> <span style="color: #5d4037;"><%= meeting.meetingTime %></span></p>
+    <p><strong>With:</strong> <span style="color: #3f51b5;"><%= meeting.meetingWith %></span> 
+      (<span style="color: #795548;"><%= meeting.designation %></span>)</p>
+    <p><strong>Purpose:</strong> <span style="color: #6a1b9a;"><%= meeting.purpose %></span></p>
+    <p><strong>Venue:</strong> <span style="color: #d84315;"><%= meeting.venue %></span></p>
+
+    <% if (meeting.quickNote && meeting.quickNote.trim().length > 0) { %>
+      <div class="note-card">
+        <h4 style="margin-bottom: 10px;">✅ Saved Note:</h4>
+        <p><%= meeting.quickNote %></p>
+      </div>
+    <% } else { %>
+      <form action="/meetings/note/<%= meeting._id %>" method="POST">
+        <label for="quickNote"><strong>Write your note below:</strong></label>
+        <textarea name="quickNote" id="quickNote" placeholder="Write your note here..."></textarea>
+        <button type="submit" class="submit-btn">💾 Save Note</button>
+      </form>
+    <% } %>
+
+    <a href="/appointments" class="back-link">🔙 Back to Appointments</a>
+  </div>
+</div>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Appointments & Meetings</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #c9d6ff, #e2e2e2); /* Page background */
+    }
+    
+  .alert {
+    padding: 10px 15px;
+    background-color: #f44336;
+    color: white;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    text-align: center;
+  }
+
+
+    .container {
+      max-width: 800px;
+      background: #ffffffda;
+      margin: 60px auto;
+      padding: 25px 30px;
+      border-radius: 10px;
+      
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: white;
+      background-color: #007bff;
+      padding: 12px 0;
+      margin: -25px -30px 25px -30px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      font-size: 24px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+
+    .form-group {
+      flex: 1;
+      min-width: 240px;
+      position: relative;
+    }
+
+    label {
+      font-weight: bold;
+      color: #003366;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="time"],
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 2px solid #007bff;
+      border-left: 6px solid red;
+      border-radius: 5px;
+      margin-top: 5px;
+      font-size: 15px;
+      background-color: #f5faff;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      resize: vertical;
+      height: 50px;
+    }
+
+    input[type="checkbox"] {
+      margin-right: 6px;
+    }
+
+    .checkbox-group {
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      color: #003366;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    button {
+      background-color: #003366;
+      color: white;
+      padding: 10px 30px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #00509e;
+    }
+
+    @media (max-width: 600px) {
+      .form-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+<% if (typeof errorMsg !== 'undefined') { %>
+  <div id="flash-message" class="alert alert-danger">
+    <%= errorMsg %>
+  </div>
+
+  <script>
+    setTimeout(() => {
+      const flash = document.getElementById("flash-message");
+      if (flash) flash.style.display = "none";
+    }, 3000);
+  </script>
+<% } %>
+
+  <div class="container">
+    <h2>Appointments & Meetings</h2>
+    <form id="meetingForm" action="/meetings" method="POST">
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="meetingDate">Appointment / Meeting Date:</label>
+          <input type="date" id="meetingDate" name="meetingDate" required />
+        </div>
+        <div class="form-group">
+          <label for="meetingTime">Appointment / Meeting Time:</label>
+          <input type="time" id="meetingTime" name="meetingTime" required />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="meetingWith">Appointment / Meeting With:</label>
+          <input type="text" id="meetingWith" name="meetingWith" required />
+        </div>
+        <div class="form-group">
+          <label for="designation">Designation:</label>
+          <input type="text" id="designation" name="designation" required />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group" style="flex: 1 1 100%;">
+          <label for="purpose">Purpose:</label>
+          <textarea id="purpose" name="purpose" required></textarea>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="venue">Venue:</label>
+          <input type="text" id="venue" name="venue" required />
+        </div>
+        <div class="form-group checkbox-group">
+          <label>
+            <input type="checkbox" id="isVIP" name="isVIP" />
+            Is VIP?
+          </label>
+        </div>
+      </div>
+
+     <div class="btn-group">
+    <button type="submit">SUBMIT</button>
+    <button type="button" id="clearBtn">CLEAR</button>
+  </div>
+  <div id="successMessage" style="display: none; color: green; text-align: center; margin-top: 15px;">
+  Submitted successfully!
+</div>
+
+    </form>
+  </div>
+<script>
+  document.getElementById("clearBtn").addEventListener("click", function () {
+    const form = document.getElementById("meetingForm");
+    form.reset(); // resets all inputs
+
+    // Optionally clear programmatically if needed
+    Array.from(form.querySelectorAll("input[type='text'], input[type='date'], input[type='time'], textarea")).forEach(el => {
+      el.value = "";
+    });
+
+    // Uncheck checkbox manually
+    const checkbox = form.querySelector("#isVIP");
+    if (checkbox) checkbox.checked = false;
+  });
+  document.getElementById("meetingForm").addEventListener("submit", function (e) {
+  e.preventDefault(); // Stop form from submitting immediately
+
+  const message = document.getElementById("successMessage");
+  message.style.display = "block";
+
+  // After 2 seconds, hide the message and submit the form
+  setTimeout(() => {
+    message.style.display = "none";
+    e.target.submit(); // Now submit the form
+  }, 2000);
+});
+document.addEventListener("DOMContentLoaded", function () {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    const minDate = `${yyyy}-${mm}-${dd}`;
+    document.getElementById("meetingDate").setAttribute("min", minDate);
+  });
+
+  // Clear form logic
+  document.getElementById("clearBtn").addEventListener("click", function () {
+    const form = document.getElementById("meetingForm");
+    form.reset();
+    Array.from(form.querySelectorAll("input[type='text'], input[type='date'], input[type='time'], textarea")).forEach(el => {
+      el.value = "";
+    });
+    const checkbox = form.querySelector("#isVIP");
+    if (checkbox) checkbox.checked = false;
+  });
+
+  // Submit with message delay
+  // document.getElementById("meetingForm").addEventListener("submit", function (e) {
+  //   e.preventDefault();
+  //   const message = document.getElementById("successMessage");
+  //   message.style.display = "block";
+  //   setTimeout(() => {
+  //     message.style.display = "none";
+  //     e.target.submit();
+  //   }, 2000);
+  // });
+  
+</script>
+
+</body>
+</html>
